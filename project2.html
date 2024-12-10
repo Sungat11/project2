@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <title>Простой Калькулятор</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f0f0f0, #dcdcdc);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        .calculator {
+            background: #ffffff;
+            padding: 20px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            width: 300px;
+        }
+        #display {
+            width: 100%;
+            height: 60px;
+            font-size: 32px;
+            text-align: right;
+            padding: 10px;
+            box-sizing: border-box;
+            margin-bottom: 20px;
+            border: none;
+            border-bottom: 2px solid #ccc;
+            outline: none;
+        }
+        .buttons {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-gap: 15px;
+        }
+        .btn {
+            height: 60px;
+            font-size: 24px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            background: #f2f2f2;
+            transition: background 0.2s;
+        }
+        .btn:hover {
+            background: #e6e6e6;
+        }
+        .operator {
+            background: #ff9500;
+            color: #fff;
+        }
+        .operator:hover {
+            background: #e08500;
+        }
+        .equal {
+            grid-column: span 4;
+            background: #34c759;
+            color: #fff;
+        }
+        .equal:hover {
+            background: #28a745;
+        }
+        .clear {
+            background: #ff3b30;
+            color: #fff;
+        }
+        .clear:hover {
+            background: #e02925;
+        }
+    </style>
+</head>
+<body>
+    <div class="calculator">
+        <input type="text" id="display" disabled>
+        <div class="buttons">
+            <button class="btn" data-value="7">7</button>
+            <button class="btn" data-value="8">8</button>
+            <button class="btn" data-value="9">9</button>
+            <button class="btn operator" data-value="/">÷</button>
+            <button class="btn" data-value="4">4</button>
+            <button class="btn" data-value="5">5</button>
+            <button class="btn" data-value="6">6</button>
+            <button class="btn operator" data-value="*">×</button>
+            <button class="btn" data-value="1">1</button>
+            <button class="btn" data-value="2">2</button>
+            <button class="btn" data-value="3">3</button>
+            <button class="btn operator" data-value="-">−</button>
+            <button class="btn clear" data-value="C">C</button>
+            <button class="btn" data-value="0">0</button>
+            <button class="btn" data-value=".">.</button>
+            <button class="btn operator" data-value="+">+</button>
+            <button class="btn equal" data-value="=">=</button>
+        </div>
+    </div>
+    <script>
+        const display = document.getElementById('display');
+        const buttons = document.querySelectorAll('.btn');
+        let expression = '';
+        buttons.forEach(button => {
+            button.addEventListener('click', () => {
+                const value = button.getAttribute('data-value');
+                if (value === 'C') {
+                    expression = '';
+                    display.value = '';
+                } else if (value === '=') {
+                    try {
+                        expression = eval(expression).toString();
+                        display.value = expression;
+                    } catch {
+                        alert('Ошибка в выражении');
+                        expression = '';
+                        display.value = '';
+                    }
+                } else {
+                    expression += value;
+                    display.value = expression;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
